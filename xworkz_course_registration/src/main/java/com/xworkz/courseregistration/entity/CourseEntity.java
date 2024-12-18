@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "course_table")
 @RequiredArgsConstructor
 @Data
-@NamedQuery(name = "findById", query = "Select cr.name from CourseEntity cr where cr.email = :em and cr.password= :pass")
+@NamedQuery(name = "findById", query = "Select cr from CourseEntity cr where cr.email =:em and cr.password=:pass")
 public class CourseEntity {
 
 
@@ -17,6 +17,7 @@ public class CourseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
     @Column(name = "name")
+
     private String name;
     @Column(name = "age")
     private int age;

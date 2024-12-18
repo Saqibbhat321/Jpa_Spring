@@ -18,8 +18,6 @@ import javax.persistence.Query;
 @Controller
 @RequestMapping("/")
 public class CourseController {
-    @Autowired
-    EntityManagerFactory emf;
 
     @Autowired
     CourseService service;

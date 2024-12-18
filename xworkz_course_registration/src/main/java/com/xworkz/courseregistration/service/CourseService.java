@@ -6,6 +6,6 @@ import com.xworkz.courseregistration.entity.CourseEntity;
 public interface CourseService {
 
     String save(CourseDto dto);
-    String getName(String email,String password);
+    String getName(String email, String password);
 
 }

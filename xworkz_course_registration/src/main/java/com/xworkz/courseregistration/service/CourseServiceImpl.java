@@ -4,7 +4,9 @@ import com.xworkz.courseregistration.dto.CourseDto;
 import com.xworkz.courseregistration.entity.CourseEntity;
 import com.xworkz.courseregistration.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -14,18 +16,20 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     @Override
     public String save(CourseDto dto) {
 
 
-        String msg = "null";
+        String msg = "registered";
         if (dto != null) {
-            if (dto.getName().length() == 10) {
+            if (dto.getName().length() > 5) {
                 System.out.println("name is valid " + dto.getName());
                 if (dto.getAge() >= 18) {
                     System.out.println("age is valid");
-                    if (dto.getPhNo().toString().startsWith("9") && dto.getPhNo().toString().length() == 10) {
+                    if (dto.getPhNo().toString().startsWith("9") && dto.getPhNo().toString().length() > 9) {
                         System.out.println("number is valid " + dto.getPhNo());
                         if (dto.getEmail().contains("@") && dto.getEmail().endsWith("gmail.com")) {
                             System.out.println("email is valid " + dto.getEmail());
@@ -40,9 +44,9 @@ public class CourseServiceImpl implements CourseService {
                                     entity.setEmail(dto.getEmail());
                                     entity.setAge((dto.getAge()));
                                     entity.setPhNo(dto.getPhNo());
-                                    entity.setPassword(dto.getPassword());
+                                    entity.setPassword(passwordEncoder.encode(dto.getPassword()));
                                     entity.setConfirmPassword(dto.getConfirmPassword());
-                                    boolean saved = courseRepository.save(entity);
+                                    courseRepository.save(entity);
 
                                 } else {
                                     System.out.println("confirm password does not match");
@@ -75,9 +79,15 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String getName(String email, String password) {
+        CourseEntity courseEntity = courseRepository.getName(email,password);
+        if (courseEntity != null) {
+            if (passwordEncoder.matches(password, courseEntity.getPassword())) {
+                return courseEntity.getName();
+            } else {
+                return "Invalid Email and Password";
+            }
 
-        String valid =courseRepository.getName(email, password);
-
-        return valid;
+        }
+        return "Invalid data";
     }
 }

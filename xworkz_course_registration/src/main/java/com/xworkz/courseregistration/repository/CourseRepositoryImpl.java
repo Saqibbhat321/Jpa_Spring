@@ -31,7 +31,6 @@ public class CourseRepositoryImpl implements CourseRepository{
             e.printStackTrace();
         }finally {
             em.close();
-            emf.close();
         }
 
 
@@ -41,30 +40,15 @@ public class CourseRepositoryImpl implements CourseRepository{
     }
 
     @Override
-    public String getName(String email, String password) {
+    public CourseEntity getName(String email, String password) {
         EntityManager em = emf.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        String s = null;
-        Query query = em.createNamedQuery("findById");
-        query.setParameter("em", email).setParameter("pass", password);
-        s = (String) query.getSingleResult();
+        CourseEntity s = null;
+        Query query = em.createNamedQuery("findById",CourseEntity.class);
+        query.setParameter("em", email);
+        query.setParameter("pass",password);
+        s = (CourseEntity) query.getSingleResult();
 
-        try {
 
-            et.begin();
-
-            et.commit();
-        }catch (Exception e)
-        {
-            if(et.isActive())
-            {
-                et.rollback();
-            }
-            e.printStackTrace();
-        }finally {
-            em.close();
-            emf.close();
-        }
         return s;
     }
 }

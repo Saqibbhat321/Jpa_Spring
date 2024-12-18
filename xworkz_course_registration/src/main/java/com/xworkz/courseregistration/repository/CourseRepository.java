@@ -5,5 +5,6 @@ import com.xworkz.courseregistration.entity.CourseEntity;
 public interface CourseRepository {
 
     boolean save(CourseEntity entity);
-    String getName(String email,String password);
+    CourseEntity getName(String email , String password);
+
 }

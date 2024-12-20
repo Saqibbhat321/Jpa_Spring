@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(basePackages = "com.xworkz.xworkmodule")
+@ComponentScan("com.xworkz.xworkmodule")
 @EnableWebMvc
 public class ModuleConfiguration {
 

@@ -5,6 +5,7 @@ import com.xworkz.xworkmodule.dto.ModuleDto;
 import com.xworkz.xworkmodule.entity.ModuleEntity;
 import com.xworkz.xworkmodule.repository.ModuleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -15,6 +16,9 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Autowired
     private ModuleRepo repo;
+
+
+
 
     @Override
     public boolean Validate(ModuleDto dto) {
@@ -36,6 +40,67 @@ public class ModuleServiceImpl implements ModuleService {
         }
         return valid;
     }
+
+    @Override
+    public String getName(String email, String password) {
+        return "";
+    }
+//
+//    @Override
+//    public String getName(String email, String password) {
+//        String  name = repo.
+//        return "";
+//    }
+
+//    @Override
+//    public boolean nameExists(String name) {
+//        boolean check = false;
+//        if (entity.getName() == name) {
+//            System.out.println("name already exists");
+//            check = true;
+//        } else {
+//            System.out.println("valid name");
+//            check = false;
+//        }
+//        return check;
+//    }
+//
+
+
+    @Override
+    public Long countName(String name) {
+        System.out.println(name);
+        Long count = repo.countName(name);
+        return count;
+    }
+
+    @Override
+    public Long countByEmail(String email) {
+        Long count = repo.countByEmail(email);
+        return count;
+    }
+
+    @Override
+    public Long countByAltEmail(String altEmail) {
+        Long count = repo.countByAltEmail(altEmail);
+        return count;
+    }
+
+    @Override
+    public Long countByPhone(String phone) {
+        Long count = repo.countByPhone(phone);
+        return count;
+    }
+
+    @Override
+    public Long countByAltPhone(String altPhone) {
+        Long count = repo.countByAltPhone(altPhone);
+        return count;
+    }
+
+
+
+
     //Custom methods
 
     private char[] generateRandomPassword() {
@@ -46,6 +111,7 @@ public class ModuleServiceImpl implements ModuleService {
         for (int i = 0; i < 8; i++) {
             pass[i] = code.charAt(random.nextInt(code.length()));
         }
+        System.out.println(pass);
         return pass;
     }
 

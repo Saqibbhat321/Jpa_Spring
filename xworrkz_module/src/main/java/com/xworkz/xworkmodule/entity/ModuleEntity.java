@@ -3,16 +3,18 @@ package com.xworkz.xworkmodule.entity;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.security.SecureRandom;
 
 @Entity
 @Table(name = "module_table")
 @Data
 @RequiredArgsConstructor
+@NamedQuery(name = "countEmail",query = "select count(e) from ModuleEntity e where e.email=:SetEmail")
+@NamedQuery(name="countName" , query ="select count(e) from ModuleEntity e where e.name =:SetName")
+@NamedQuery(name = "countAltEmail", query = "select count(e) from ModuleEntity e where e.alterEmail = :SetAltEmail")
+@NamedQuery(name = "countPhone",query = "select count(e) from ModuleEntity e where e.phNo=:setPhone")
+@NamedQuery(name = "countAltPhNo",query = "select count(e) from ModuleEntity e where e.alterPhNo=:setAltPhNo")
 public class ModuleEntity {
 
     @Id

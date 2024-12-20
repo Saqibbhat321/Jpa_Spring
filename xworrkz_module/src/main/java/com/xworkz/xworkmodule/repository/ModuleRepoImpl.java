@@ -35,4 +35,66 @@ public class ModuleRepoImpl implements ModuleRepo{
 
         return true;
     }
+
+    @Override
+    public String getName(String email, String password) {
+
+        return "";
+    }
+
+
+    @Override
+    public Long countName(String name) {
+
+            EntityManager em = emf.createEntityManager();
+            Long count = 0L;
+                count = (Long) em.createNamedQuery("countName")
+                        .setParameter("SetName", name)
+                        .getSingleResult();
+
+                return count;
+    }
+
+    @Override
+    public Long countByEmail(String email) {
+
+        EntityManager em = emf.createEntityManager();
+        Long count = (Long) em.createNamedQuery("countEmail")
+                .setParameter("SetEmail",email)
+                .getSingleResult();
+        return count;
+    }
+
+    @Override
+    public Long countByAltEmail(String altEmail) {
+        EntityManager em = emf.createEntityManager();
+
+        Long count = (Long) em.createNamedQuery("countAltEmail")
+                .setParameter("SetAltEmail", altEmail)
+                .getSingleResult();
+
+        return count;
+    }
+
+    @Override
+    public Long countByPhone(String phone) {
+        EntityManager em = emf.createEntityManager();
+
+        Long    count = (Long) em.createNamedQuery("countPhone")
+                    .setParameter("setPhone", phone)
+                    .getSingleResult();
+
+            return count;
+    }
+
+    @Override
+    public Long countByAltPhone(String altPhone) {
+        EntityManager em = emf.createEntityManager();
+        Long count = (Long) em.createNamedQuery("countAltPhNo")
+                .setParameter("setAltPhNo",altPhone)
+                .getSingleResult();
+        return count;
+    }
+
+
 }

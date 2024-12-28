@@ -1,10 +1,13 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centered Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .center-form {
             display: flex;
@@ -74,10 +77,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="Login.jsp">Login</a>
+                        <a class="nav-link" href="index.jsp">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="SignUp.jsp">Signup</a>
+                        <a class="nav-link" href="Login.jsp">Login</a>
                     </li>
                 </ul>
             </div>
@@ -86,6 +89,9 @@
     <div class="container center-form">
         <div class="form-container">
             <form action="submit" method="post">
+            <c:forEach item="${error}" var ="display">
+            <span style="color:red">${display.message}</span>
+            </c:forEach>
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" onChange="onName()" name="name" required>
@@ -99,11 +105,11 @@
                 <div class="mb-3">
                     <label for="alterEmail" class="form-label">Alternate Email</label>
                     <input type="email" class="form-control" id="alterEmail" onChange="onAlterEmail()" name="alterEmail">
-                    <span id="displayAlterEmail"></span>
+                    <span id="errorAlterEmail"></span>
                 </div>
                 <div class="mb-3">
                     <label for="phNo" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phNo" onChange="onPhoneNum()" name="phNo" required>
+                    <input type="text" class="form-control" id="phNo" onChange="onPhoneChange()" name="phNo" required>
                     <span id="displayPhone"></span>
                 </div>
                 <div class="mb-3">
@@ -113,7 +119,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
-                    <input type="text" class="form-control" id="location" onChange="onLocation()" name="location" required>
+                    <input type="text" class="form-control" id="location" name="location" required>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Submit">
             </form>
@@ -148,15 +154,16 @@
             }
         }
 
-        function onAltEmailChange() {
+        function onAlterEmail() {
             var altEmail = document.getElementById('alterEmail').value;
+            console.log(altEmail);
+            var userEmail = document.getElementById("email").value;
+            if(userEmail === altEmail) {
+                document.getElementById("errorAlterEmail").innerHTML = "<span style ='color:red'>User email and alternate email should be different</span>";
+            }
             var xhttp = new XMLHttpRequest();
             xhttp.open("GET", "http://localhost:8080/xworrkz_module/altEmail/" + altEmail);
             xhttp.send();
-            xhttp.onload = function(){
-                console.log(this.responseText);
-                document.getElementById("displayAlterEmail").innerHTML = this.responseText;
-            }
         }
 
         function onPhoneChange() {
@@ -170,19 +177,19 @@
             }
         }
 
-        function onAltPhoneChange() {
+        function onAlterPhoneNum() {
             var altPhone = document.getElementById('alterPhNo').value;
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "http://localhost:8080/xworrkz_module/altPhone/" + altPhone);
-            xhttp.send();
-            xhttp.onload = function(){
-                console.log(this.responseText);
-                document.getElementById("displayAlterPhone").innerHTML = this.responseText;
+            var userPhone = document.getElementById("phNo").value;
+            if(userPhone === altPhone) {
+                            document.getElementById("displayAlterPhone").innerHTML = "<span style ='color:red'>Phone Number and alternate Phone Number should not be same</span>";
             }
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "http://localhost:8080/xworrkz_module/altPhone/" +altPhone);
+            xhttp.send();
         }
+
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+Pp5Ga9V3ul5mcsMEQfDfWWZRm8vjaJkPcU5gBXN4t2Ttvm6w6P5jeA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

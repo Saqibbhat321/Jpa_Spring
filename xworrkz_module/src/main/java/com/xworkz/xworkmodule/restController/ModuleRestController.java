@@ -17,16 +17,15 @@ public class ModuleRestController {
 
     public ModuleRestController()
     {
-        System.out.println("rest controller to chal raha hai");
     }
     @GetMapping(value = "/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String onName(@PathVariable String name) {
         System.out.println("name=" + name);
         Long count = this.service.countName(name);
         if (count == 0) {
-            return "";
+            return " name available";
         } else {
-            return "Name exists";
+            return "Name exists in db";
         }
 
     }
@@ -37,7 +36,7 @@ public class ModuleRestController {
         Long count = this.service.countByEmail(email);
         String msg="";
         if (count == 0) {
-           msg ="";
+           msg =" available";
         } else {
             msg ="Email exists";
         }
@@ -45,19 +44,19 @@ public class ModuleRestController {
     }
 
 
-    @GetMapping(value = "/altEmail/{alterEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/altEmail/{altEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String onAltEmail(@PathVariable String altEmail) {
         System.out.println("alterEmail=" + altEmail);
         Long count = this.service.countByAltEmail(altEmail);
-        if (count == 0) {
-            return "";
-        } else {
+        if (count > 0) {
             return "Alternate email exists";
+        } else {
+            return "";
         }
     }
 
     @GetMapping(value = "/phone/{phone}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String onPhone(@PathVariable String phone) {
+    public String onPhone(@PathVariable double phone) {
         System.out.println("phNo=" + phone);
         Long count = this.service.countByPhone(phone);
         if (count == 0) {
@@ -68,7 +67,7 @@ public class ModuleRestController {
     }
 
     @GetMapping(value = "/altPhone/{altPhone}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String onAltPhone(@PathVariable String altPhone) {
+    public String onAltPhone(@PathVariable double altPhone) {
         System.out.println("alterPhNo=" + altPhone);
         Long count = this.service.countByAltPhone(altPhone);
         if (count == 0) {

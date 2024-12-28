@@ -1,3 +1,6 @@
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +21,13 @@
 </head>
 <body>
     <div class="container">
+     <c:set var="email" value="${email}"/>
         <h2>Update Password</h2>
-        <form action="/update" method="post">
+        <form action="update" method="post">
+        <input type="hidden" name="email" value="${email}"/>
             <div class="mb-3">
-                <label for="oldPassword" class="form-label">Old Password:</label>
-                <input type="password" id="oldPassword" name="oldPassword" class="form-control" required>
+                <label for="oldPassword" class="form-label">Old Password</label>
+                <input type="text" id="oldPassword" name="autogeratedpassword" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="newPassword" class="form-label">New Password:</label>
@@ -32,7 +37,8 @@
                 <label for="confirmPassword" class="form-label">Confirm Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
             </div>
-            <input type="submit" value="update" class="btn btn-primary">Submit</button>
+            <input type="submit" value="Update" class="btn btn-primary"></input>
+
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

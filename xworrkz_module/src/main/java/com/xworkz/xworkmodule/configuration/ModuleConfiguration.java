@@ -7,14 +7,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.xworkz.xworkmodule")
 @EnableWebMvc
-@Slf4j
 public class ModuleConfiguration {
 
     @Bean
@@ -29,14 +30,30 @@ public class ModuleConfiguration {
     }
 
     @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder()
+    {
+        return   new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean()
     {
     LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
-    log.info("this is logger");
+//    log.info("this is logger");
     bean.setPackagesToScan("com.xworkz.xworkmodule.entity");
     bean.setDataSource(dataSource());
     bean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
     return bean;
     }
+
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
+
 }
 

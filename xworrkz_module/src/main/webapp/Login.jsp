@@ -25,19 +25,19 @@
                             background-color: orange; /* Navbar background color */
                             border-bottom: 2px solid red; /* Optional: Bottom border */
 
-                        }
-                .nav-link {
-                            color: blue; /* Login and signup button color */
-                        }
-                .nav-link:hover {
-                            color: darkblue; /* Darker blue on hover */
-                        }
+        }
+       .nav-link {
+           color: blue; /* Login and signup button color */
+       }
+       .nav-link:hover {
+            color: darkblue;
+       }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.jsp">
                 <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="Icon" width="30" height="30" class="d-inline-block align-top">
 
             </a>
@@ -65,8 +65,6 @@
             <c:if test="${not empty changePwd}"> <p style ="color: green;">${changePwd}</p> </c:if>
             <form action="login" method="post">
 
-
-
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required>
@@ -76,6 +74,9 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <input type="submit" class="btn btn-primary w-100" value="Login">
+                <div class="mt-3">
+                    <a href="ResetPassword.jsp">Forgot your password? Reset it here.</a>
+                </div>
             </form>
         </div>
     </div>

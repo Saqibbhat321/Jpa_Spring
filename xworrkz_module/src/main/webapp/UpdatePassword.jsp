@@ -20,11 +20,15 @@
     </style>
 </head>
 <body>
+
     <div class="container">
      <c:set var="email" value="${email}"/>
         <h2>Update Password</h2>
         <form action="update" method="post">
         <input type="hidden" name="email" value="${email}"/>
+        <div>
+            <c:if test="${not empty email}"> <p style ="color: red;">${email}</p> </c:if>
+        </div>
             <div class="mb-3">
                 <label for="oldPassword" class="form-label">Old Password</label>
                 <input type="text" id="oldPassword" name="autogeratedpassword" class="form-control" required>

@@ -38,8 +38,8 @@ public class ModuleRepoImpl implements ModuleRepo {
     public String getName(String email, String password) {
         EntityManager em = emf.createEntityManager();
         Query query = em.createNamedQuery("findNameThroughLogin");
-        String namee = (String) query.setParameter("pass", password).setParameter("email", email).getSingleResult();
-        return namee;
+        String name = (String) query.setParameter("pass", password).setParameter("email", email).getSingleResult();
+        return name;
     }
 
 
@@ -147,6 +147,68 @@ public class ModuleRepoImpl implements ModuleRepo {
         {
             et.rollback();
             e.printStackTrace();
+        }finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public boolean updateDetailsByName(ModuleEntity entity) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Query query = em.createNamedQuery("updateDetailsByName");
+            query.setParameter("email",entity.getEmail());
+            query.setParameter("alterEmail", entity.getAlterEmail());
+            query.setParameter("phNo",entity.getPhNo());
+            query.setParameter("alterPhNo",entity.getAlterPhNo());
+            query.setParameter("location",entity.getLocation());
+            query.setParameter("name", entity.getName()); // Include this line to set the name parameter
+            int rowsAffected = query.executeUpdate();
+            System.out.println("rows affected "+rowsAffected);
+            et.commit();
+            return  rowsAffected>0;
+        }catch (Exception e)
+        {
+            if(et.isActive())
+            {
+                et.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public boolean resetPasswordAndLoginCount(String email, String password) {
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            Query query = em.createNamedQuery("resetPasswordAndLoginCount");
+            query.setParameter("email",email);
+            query.setParameter("newPassword",password);
+            query.setParameter("loginCount",0);
+            query.setParameter("accountLocked",false);
+            int rowAffected = query.executeUpdate();
+            et.commit();
+            System.out.println("email in repository "+email);
+            System.out.println("Password in repository "+password);
+            System.out.println("rows affected "+rowAffected);
+            return rowAffected>0;
+        }catch (Exception e)
+        {
+            if(et.isActive())
+            {
+                et.rollback();
+            }
+            e.printStackTrace();
+            return false;
         }finally {
             em.close();
         }

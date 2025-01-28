@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController ////it indicates the class is spring MVC controller and methods in this class will return data and views it.
 @RequestMapping("/")
 public class ModuleRestController {
     @Autowired
@@ -18,7 +18,9 @@ public class ModuleRestController {
     public ModuleRestController()
     {
     }
-    @GetMapping(value = "/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    //@GetMapping : it maps the /name/{name} url pattern with the method onName
+    @GetMapping(value = "/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE) // it ensures that the method returns the response in JSON format.
     public String onName(@PathVariable String name) {
         System.out.println("name=" + name);
         Long count = this.service.countName(name);
@@ -45,7 +47,7 @@ public class ModuleRestController {
 
 
     @GetMapping(value = "/altEmail/{altEmail}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String onAltEmail(@PathVariable String altEmail) {
+    public String onAltEmail(@PathVariable String altEmail) { //it binds the path variable {altEmail} in url with the parameter.
         System.out.println("alterEmail=" + altEmail);
         Long count = this.service.countByAltEmail(altEmail);
         if (count > 0) {

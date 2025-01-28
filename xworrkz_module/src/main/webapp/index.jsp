@@ -9,12 +9,22 @@
         .navbar-custom {
             background-color: orange;
             border-bottom: 2px solid red;
+            height: 80px;
+            font-size: 20px;
+
         }
+        .custom-radius{
+               border-radius:25%;
+        }
+        .gap-right{
+            margin-right:10px;
+            }
+
         .nav-link {
             color: blue;
         }
         .nav-link:hover {
-            color: darkblue;
+            color: red;
         }
         .card {
             background-color: orange;
@@ -50,25 +60,31 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="Icon" width="30" height="30" class="d-inline-block align-top">
-                Brand
+        <div class="container">
+
+            <a class="navbar-brand mx-auto" href="index.jsp">
+                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="Icon" width="140" height="70" class="d-inline-block align-top">
+
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="Login.jsp">Login</a>
+                        <a class="btn btn-primary nav-link custom-radius gap-right" href="Login.jsp">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="SignUp.jsp">Signup</a>
+                        <a class="btn btn-primary nav-link custom-radius" href="SignUp.jsp">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary nav-link custom-radius" href="UpdateDetails.jsp">UpdateDetails</a>
                     </li>
                 </ul>
             </div>
         </div>
+
     </nav>
 
 

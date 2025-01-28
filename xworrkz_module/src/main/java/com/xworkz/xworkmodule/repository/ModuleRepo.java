@@ -14,5 +14,8 @@ public interface ModuleRepo {
     ModuleEntity getEntityByEmail(String email);
     ModuleEntity findByEmail(String email);
     void onUpdate(ModuleEntity entity);
+    boolean updateDetailsByName(ModuleEntity entity);
+    boolean resetPasswordAndLoginCount(String email, String password);
+
 
 }

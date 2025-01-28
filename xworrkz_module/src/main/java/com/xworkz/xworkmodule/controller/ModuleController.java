@@ -25,61 +25,25 @@ public class ModuleController {
 
 
     @PostMapping("/submit")
-    public String onSubmit(ModuleDto dto, Model model) {
+    public String onSubmit(ModuleDto dto,Model model) {
         System.out.println("executing onSubit in COntroller");
         service.Validate(dto);
+        model.addAttribute("signup", "Sign Up Successful");
 
-        return "SignUp.jsp";
+        return "SignUp";
     }
 
-    @PostMapping("/login")
-    public String onLogin(@RequestParam String email, @RequestParam String password, Model model) {
-
-        ModuleDto moduleDto = service.checkLogin(email, password);
-
-        if (moduleDto == null) {
-            model.addAttribute("error", "Wrong Password, Try Again");
-            System.err.println("Wrong password....");
-            // Increment the login count for wrong password attempts
-            if(moduleDto == null)
-            {
-            moduleDto = new ModuleDto(); // Initialize if null
-            moduleDto.setLogin_count(0);
-
-            }
-            moduleDto.setLogin_count(moduleDto.getLogin_count() + 1);
-            // Check if the login count has reached the threshold for locking
-            if (moduleDto.getLogin_count() >= 3) {
-                System.err.println("Your Account is Locked");
-                model.addAttribute("locked", "Your Account is Locked");
-            }
-            return "Login.jsp";
-        }
-
-        if (moduleDto.getLogin_count() >= 3) {
-            System.err.println("Your Account is Locked");
-            model.addAttribute("locked", "Your Account is Locked");
-            return "Login.jsp";
-        } else if (moduleDto.getLogin_count() < 0) {
-            System.out.println("First time login for " + email);
-            model.addAttribute("email", email);
-            return "UpdatePassword.jsp";
-        } else {
-            System.out.println("Not a First time Login....");
-            // Reset login count on successful login
-            moduleDto.setLogin_count(0);
-            model.addAttribute("msg", moduleDto.getName());
-            return "Login.jsp"; // Assuming you have a home page after a successful login
-        }
-    }
-
-
+//    @PostMapping("/login")
+//    public String onLogin(@RequestParam String email, @RequestParam String password, Model model) {
+//
+//        ModuleDto moduleDto = service.checkLogin(email, password);
+////        System.out.println(moduleDto);
 //        System.out.println("controller gets " + moduleDto);
 //        if (moduleDto == null) {
-//            model.addAttribute("error","Wrong Password, Try Again");
+//            model.addAttribute("error","Wrong Credentials");
 //            System.err.println("Wrong password....");
 //            return "Login.jsp";
-//        }if ( moduleDto.getLogin_count() >= 3) {
+//        }if (moduleDto.getLogin_count() >=3) {
 //            System.err.println("Your Account is LOcked");
 //            model.addAttribute("locked", "Your Account is Locked");
 //            return "Login.jsp";
@@ -89,17 +53,17 @@ public class ModuleController {
 //            model.addAttribute("email", email);
 //            return "UpdatePassword.jsp";
 //        }
-//         else
+//         else {
 //            System.out.println("Not a First time Login....");
 //            model.addAttribute("msg", moduleDto.getName());
-    //        moduleDto.setLogin_count(0);
 //            return "Login.jsp";
+//        }
 //
 //    }
 
+
     @PostMapping("/update")
     public String updatePwd(@RequestParam String email, @RequestParam String autogeratedpassword, @RequestParam String newPassword, @RequestParam String confirmPassword, Model model) {
-
 
         ModuleEntity moduleEntity = service.updatePassword(email, autogeratedpassword, newPassword, confirmPassword);
         System.out.println(moduleEntity);
@@ -108,7 +72,29 @@ public class ModuleController {
             System.out.println("password changed successfully");
             model.addAttribute("changePwd", "password changed successfully");
         }
-        return "Login.jsp";
+        return "Login";
+
+    }
+    @PostMapping("/updateDetails")
+    public String updateDetails( String name, String alterEmail,String location,double phNo,String email, double alterPhNo,Model model)
+    {
+        ModuleDto dto = new ModuleDto();
+        dto.setName(name);
+        dto.setEmail(email);
+        dto.setAlterEmail(alterEmail);
+        dto.setPhNo(phNo);
+        dto.setAlterPhNo(alterPhNo);
+        dto.setLocation(location);
+
+       boolean updatedDetailsByName = service.UpdateDetailsByName(dto);
+        if(updatedDetailsByName)
+        {
+            System.out.println("data updated successfully");
+            model.addAttribute("detailUpdateMsg","Detail updated for "+dto.getName());
+        }else System.out.println("Failed to Update");
+
+        return "UpdateDetails";
+
 
     }
 }

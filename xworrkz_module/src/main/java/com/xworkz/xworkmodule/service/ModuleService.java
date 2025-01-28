@@ -14,8 +14,11 @@ public interface ModuleService {
     Long countByAltEmail(String altEmail);
     Long countByPhone(double phone);
     Long countByAltPhone(double altPhone);
-    ModuleDto checkLogin(String email, String password);
+    ModuleEntity checkLogin(String email, String password);
     ModuleEntity updatePassword(String email, String autogeratedpassword, String newPassword, String confirmPassword);
+    boolean UpdateDetailsByName(ModuleDto dto);
+    boolean saveEmail(String email, String password);
+    boolean resetPassword(String email, String newPassword);
 
 
 
